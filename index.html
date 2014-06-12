@@ -3,9 +3,11 @@
 <head>
 	<script src="angular.min.js"></script>
 	<script src="js/app.js"></script>
+	<script src="js/keyboard.js"></script>
 	<link rel="stylesheet" href="main.css"></link>
 </head>
 <body ng-controller="desk">
+	<div ng-controller="keyboard"></div>
 	<div id="gameplace">
 		<div ng-repeat="rw in data">
 			<div ng-repeat="row in rw" ng-bind="row.val" ng-class="'style'+row.val">1</div>

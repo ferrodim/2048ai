@@ -1,4 +1,5 @@
-angular.module('myApp', []).controller('desk', function($scope, $timeout){
+var myApp = angular.module('myApp', []);
+myApp.controller('desk', function($scope, $timeout){
 	$scope.data = [];
 	for (var i=0;i<4;i++){
 		$scope.data[i] = [];
