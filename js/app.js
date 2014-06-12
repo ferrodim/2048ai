@@ -4,7 +4,7 @@ myApp.controller('desk', function($scope, $timeout){
 	for (var i=0;i<4;i++){
 		$scope.data[i] = [];
 		for (var j=0;j<4;j++){
-			$scope.data[i][j] = {val: 0, id:i*4+j};
+			$scope.data[i][j] = {val: '', id:i*4+j};
 		}
 	}
 	
@@ -63,12 +63,12 @@ myApp.controller('desk', function($scope, $timeout){
 	}
 	
 	function tryMove(x1, y1, x2, y2){
-		if ($scope.data[x2][y2].val == 0){
+		if ($scope.data[x2][y2].val == ''){
 			$scope.data[x2][y2].val = $scope.data[x1][y1].val;
-			$scope.data[x1][y1].val = 0;
+			$scope.data[x1][y1].val = '';
 		} else if ($scope.data[x2][y2].val == $scope.data[x1][y1].val){
 			$scope.data[x2][y2].val *= 2;
-			$scope.data[x1][y1].val = 0;
+			$scope.data[x1][y1].val = '';
 		}
 		if ($scope.data[x2][y2].val == 2048){
 			alert('you  win!');

@@ -1,5 +1,5 @@
 body {background-color: #ccc;}
-#gameplace {position:absolute;top: 10%;left: 10%;width: 50%;height: 80%;background-color: #eee;display:table;}
+#gameplace {position:absolute;top: 10%;left: 10%;width: 50%;height: 80%;background-color: #eee;display:table;border-radius:7.5%;font-size: 5em;}
 #gameplace div {width:100%;height:25%;display:table-row;}
 #gameplace div div {width:25%;height:25%;display:table-cell;text-align:center;vertical-align:middle;border-radius:15%;}
 
