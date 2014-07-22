@@ -4,6 +4,7 @@
 	<script src="angular.min.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/keyboard.js"></script>
+	<script src="js/bot.js"></script>
 	<link rel="stylesheet" href="main.css"></link>
 </head>
 <body ng-controller="desk">
@@ -18,5 +19,7 @@
 	<button ng-click="move(3)" id="botButton">down</button>
 	<button ng-click="move(0)" id="leftButton">left</button>
 	<button ng-click="move(1)" id="rightButton">right</button>
+	<input type='checkbox' title='bot' ng-controller="bot" ng-model="isBotActite">bot</input>
+	<div ng-bind="'totalScore:'+totalSum"></div>
 </body>
 </html>

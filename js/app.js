@@ -112,10 +112,13 @@ myApp.controller('desk', function($scope, $timeout){
 							tryMove(i, j, i+moveDistance, j);
 						}
 					}
-					/*for (var s=3;s>0;s--){
-						tryMove(s-1, i, s, i);
-					}*/
 				}
+			}
+		}
+		$scope.totalSum = 0;
+		for (var i=0;i<4;i++){
+			for (var j=0;j<4;j++){
+				$scope.totalSum += d[i][j].val | 0;
 			}
 		}
 		$timeout($scope.addRandom, 200);
