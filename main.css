@@ -9,7 +9,7 @@ body {background-color: #ccc;}
 #leftButton {position:absolute;top:47.5%;left:5%;width:4%;height:5%;}
 #rightButton {position:absolute;top:47.5%;left:60%;width:4%;height:5%;}
 
-.style0{}
+.style0{color:#eee;}
 .style2{background-color: #dd3;}
 .style4{background-color: #7c7;}
 .style8{background-color: #3dd;}

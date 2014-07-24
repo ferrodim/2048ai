@@ -4,7 +4,7 @@ myApp.controller('desk', function($scope, $timeout){
 	for (var i=0;i<4;i++){
 		$scope.data[i] = [];
 		for (var j=0;j<4;j++){
-			$scope.data[i][j] = {val: '', id:i*4+j};
+			$scope.data[i][j] = {val: 0, id:i*4+j};
 		}
 	}
 	
@@ -21,98 +21,21 @@ myApp.controller('desk', function($scope, $timeout){
 			randItem.val = 2;
 		}
 	}
-	
+
 	$scope.addRandom();
 	$scope.addRandom();
-	
+
 	$scope.move = function(direction){
 		var d = $scope.data;
-		if (direction == 0){  //left
-			for (var i=0;i<4;i++){  // for each line
-				for (var j=1;j<4;j++){  // for each element, exept first
-					if (d[i][j].val){
-						var moveDistance=0;
-						while (moveDistance < j){
-							moveDistance++;
-							if (d[i][j-moveDistance].val == ''){
-								
-							} else if (d[i][j-moveDistance].val == d[i][j].val){
-								break;
-							} else {
-								moveDistance--;
-								break;
-							}
-						}
-						if (moveDistance > 0){
-							tryMove(i, j, i, j-moveDistance);
-						}
-					}
-				}
-			}
-		} else if (direction == 1){ //rigth
-			for (var i=0;i<4;i++){
-				for (var j=2;j>=0;j--){
-					if (d[i][j].val){
-						var moveDistance=0;
-						while (j+moveDistance < 3){
-							moveDistance++;
-							if (d[i][j+moveDistance].val == ''){
-								
-							} else if (d[i][j+moveDistance].val == d[i][j].val){
-								break;
-							} else {
-								moveDistance--;
-								break;
-							}
-						}
-						if (moveDistance > 0){
-							tryMove(i, j, i, j+moveDistance);
-						}
-					}
-				}
-			}
-		} else if (direction == 2){ //up
-			for (var i=1;i<4;i++){
-				for (var j=0;j<4;j++){
-					if (d[i][j].val){
-						var moveDistance=0;
-						while (moveDistance < i){
-							moveDistance++;
-							if (d[i-moveDistance][j].val == ''){
-							} else if (d[i-moveDistance][j].val == d[i][j].val){
-								break;
-							} else {
-								moveDistance--;
-								break;
-							}
-						}
-						if (moveDistance > 0){
-							tryMove(i, j, i-moveDistance, j);
-						}
-					}
-				}
-			}
-		} else if (direction == 3){  //down
-			for (var i=2;i>=0;i--){
-				for (var j=0;j<4;j++){
-					if (d[i][j].val){
-						var moveDistance=0;
-						while (i+moveDistance < 3){
-							moveDistance++;
-							if (d[i+moveDistance][j].val == ''){
-								
-							} else if (d[i+moveDistance][j].val == d[i][j].val){
-								break;
-							} else {
-								moveDistance--;
-								break;
-							}
-						}
-						if (moveDistance > 0){
-							tryMove(i, j, i+moveDistance, j);
-						}
-					}
-				}
+		for (var i=0;i<4;i++){
+			if (direction == 0){  //left
+				tryMove(d[i][0], d[i][1], d[i][2], d[i][3]);
+			} else if (direction == 1){ //right
+				tryMove(d[i][3], d[i][2], d[i][1], d[i][0]);
+			} else if (direction == 2){ //up
+				tryMove(d[0][i], d[1][i], d[2][i], d[3][i]);
+			} else if (direction == 3){  //down
+				tryMove(d[3][i], d[2][i], d[1][i], d[0][i]);
 			}
 		}
 		$scope.totalSum = 0;
@@ -121,19 +44,37 @@ myApp.controller('desk', function($scope, $timeout){
 				$scope.totalSum += d[i][j].val | 0;
 			}
 		}
-		$timeout($scope.addRandom, 200);
+		$timeout($scope.addRandom, 300);
 	}
-	
-	function tryMove(x1, y1, x2, y2){
-		if ($scope.data[x2][y2].val == ''){
-			$scope.data[x2][y2].val = $scope.data[x1][y1].val;
-			$scope.data[x1][y1].val = '';
-		} else if ($scope.data[x2][y2].val == $scope.data[x1][y1].val){
-			$scope.data[x2][y2].val *= 2;
-			$scope.data[x1][y1].val = '';
+
+	function findNextNonEmpty(items, startIndex){
+		for (var i=startIndex+1;i<4;i++){
+			if (items[i].val !== 0){
+				return i;
+			}
 		}
-		if ($scope.data[x2][y2].val == 2048){
-			alert('you  win!');
+		return false;
+	}
+
+	function tryMove(a,b,c,d){
+		var items = [a,b,c,d];
+		for (var i=0;i<4;i++){
+			if (items[i].val == 0){
+				var j = findNextNonEmpty(items, i);
+				if (j !== false){
+					items[i].val = items[j].val;
+					items[j].val = 0;
+				} else {
+					//return false;
+				}
+			}
+			var toGlued = findNextNonEmpty(items, i);
+			if (toGlued !== false){
+				if (items[toGlued].val == items[i].val){
+					items[i].val += items[toGlued].val;
+					items[toGlued].val = 0;
+				}
+			}
 		}
 	}
 	
